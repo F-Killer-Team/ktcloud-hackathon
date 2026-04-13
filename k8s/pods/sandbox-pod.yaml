@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sandbox-pod
+  labels:
+    role: sandbox
+spec:
+  tolerations:
+  - key: "node-role.kubernetes.io/sandbox"
+    operator: "Exists"
+    effect: "NoSchedule"
+  # runtimeClassName: gvisor
+  containers:
+  - name: sandbox
+    image: sandbox-image:latest
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      capabilities:
+        drop:
+          - ALL
+  restartPolicy: Never
