@@ -34,6 +34,11 @@ Copy `.env.example` to `.env` if you want to override defaults.
 
 See [API_CONTRACT.md](./API_CONTRACT.md) for the frontend/Sandbox callback contract and sample payloads.
 
+## CI/CD
+
+GitHub Actions builds the backend image from `apps/backend/Dockerfile`.
+If `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are configured in repository secrets, pushes to the repository will also publish the image to Docker Hub.
+
 ## Demo flow
 
 1. Upload a file to `POST /api/uploads`.
