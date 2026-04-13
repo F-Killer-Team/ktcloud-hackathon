@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: backend-image:latest
+        image: kimsewon/sandbox-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
 ---

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/ktcloud-sandbox-backend
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/sandbox-backend
 
 jobs:
   backend-test-and-build:
