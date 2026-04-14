@@ -19,6 +19,13 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        env:
+        - name: ENABLE_MOCK_SANDBOX
+          value: "false"
+        - name: USE_IN_CLUSTER_CONFIG
+          value: "true"
+        - name: K8S_NAMESPACE
+          value: "default" 
 ---
 apiVersion: v1
 kind: Service
