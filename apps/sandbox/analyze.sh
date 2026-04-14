@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$JOB_ID" ] || [ -z "$BACKEND_URL" ] || [ -z "$FILE_PATH" ]; then
+if [ -z "$JOB_ID" ] || [ -z "$CALLBACK_URL" ] || [ -z "$FILE_PATH" ]; then
     echo "[에러] 환경변수(JOB_ID, BACKEND_URL, TARGET_FILE)가 부족합니다."
     exit 1
 fi
