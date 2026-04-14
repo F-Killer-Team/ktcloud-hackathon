@@ -32,7 +32,7 @@ def create_sandbox_job(job_id: str, filename: str) -> dict[str, str | bool]:
     container = client.V1Container(
         name="sandbox",
         image=settings.sandbox_image,
-        command=["bash", "/sandbox/analyze.sh"],
+        command=["bash", "/app/analyze.sh"],
         env=[
             client.V1EnvVar(name="JOB_ID", value=job_id),
             client.V1EnvVar(name="FILE_NAME", value=filename),
