@@ -15,7 +15,7 @@ curl -fsSL "${DOWNLOAD_URL}" -o "${TARGET_FILE}"
 
 LOG_OUTPUT=$(python3 "${TARGET_FILE}" 2>&1 || true)
 
-if echo "$LOG_OUTPUT" | grep -qE "HACKED|Exfiltrating|Unauthorized"; then
+if echo "$LOG_OUTPUT" | grep -qiE "HACKED|Exfiltrating|Unauthorized|Ransomware|ENCRYPTING|LOCKED|encrypted|ALL FILES ARE LOCKED|ModuleNotFoundError|Traceback"; then    
     STATUS="MALICIOUS"
     SUMMARY="Detected ransomware-like runtime behavior in the uploaded file."
 else
