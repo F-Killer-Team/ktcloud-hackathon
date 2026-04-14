@@ -3,7 +3,17 @@ export function buildResultFromJob(job) {
     return null;
   }
 
-  if (job.status === "MALICIOUS") {
+  const summary = (job.result?.summary || "").toLowerCase();
+
+  const isMalicious =
+    job.status === "MALICIOUS" ||
+    summary.includes("malicious") ||
+    summary.includes("ransomware") ||
+    summary.includes("detected ransomware-like runtime behavior") ||
+    summary.includes("critical malware behavior detected") ||
+    summary.includes("악성");
+
+  if (isMalicious) {
     return {
       type: "malicious",
       title: "위험 파일",
@@ -12,7 +22,14 @@ export function buildResultFromJob(job) {
     };
   }
 
-  if (job.status === "CLEAN" || job.status === "DESTROYED") {
+  const isSafe =
+    job.status === "CLEAN" ||
+    summary.includes("no suspicious runtime behavior was detected") ||
+    summary.includes("정상 파일") ||
+    summary.includes("위험 요소가 발견되지 않았습니다") ||
+    summary.includes("위협 요소가 발견되지 않았습니다");
+
+  if (isSafe) {
     return {
       type: "safe",
       title: "안전 확인",
