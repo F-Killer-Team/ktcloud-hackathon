@@ -1,4 +1,4 @@
-name: Sandbox Deployment Pipeline
+name: ZERO BOX Deployment Pipeline
 
 on:
   workflow_dispatch:
