@@ -25,4 +25,10 @@
   shell: |
     export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
     kubectl apply -f /home/{{ ansible_user }}/k8s-configs/network/
-    kubectl apply -f /home/{{ ansible_user }}/k8s-configs/pods/
+    kubectl apply -f /home/{{ ansible_user }}/k8s-configs/pods/frontend-pod.yaml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-configs/pods/backend-pod.yaml
+
+- name: 기존 sandbox-pod 정적 배포 제거
+  shell: |
+    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    kubectl delete pod sandbox-pod --ignore-not-found=true
