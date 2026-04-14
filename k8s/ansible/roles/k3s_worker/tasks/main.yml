@@ -8,5 +8,6 @@
 - name: 워커 노드 격리 설정 (Taint)
   shell: |
     export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-    kubectl taint nodes {{ inventory_hostname }} role=sandbox:NoSchedule --overwrite
+    NODE_NAME=$(kubectl get nodes --no-headers | grep -v control-plane | awk '{print $1}')
+    kubectl taint nodes $NODE_NAME role=sandbox:NoSchedule --overwrite
   delegate_to: "{{ groups['master'][0] }}"
