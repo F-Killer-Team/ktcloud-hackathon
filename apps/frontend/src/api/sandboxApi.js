@@ -1,12 +1,11 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
-  "http://localhost:8000";
+  (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/, "");
 
 export async function uploadFile(file) {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`${API_BASE_URL}/api/uploads`, {
+  const response = await fetch(`${API_BASE_URL}/uploads`, {
     method: "POST",
     body: formData,
   });
@@ -19,7 +18,7 @@ export async function uploadFile(file) {
 }
 
 export async function fetchJob(jobId) {
-  const response = await fetch(`${API_BASE_URL}/api/jobs/${jobId}`);
+  const response = await fetch(`${API_BASE_URL}/jobs/${jobId}`);
 
   if (!response.ok) {
     throw new Error("최종 분석 결과를 불러오지 못했습니다.");
@@ -29,5 +28,5 @@ export async function fetchJob(jobId) {
 }
 
 export function createJobEventSource(jobId) {
-  return new EventSource(`${API_BASE_URL}/api/jobs/${jobId}/events`);
+  return new EventSource(`${API_BASE_URL}/jobs/${jobId}/events`);
 }
