@@ -12,6 +12,7 @@ spec:
       labels:
         role: backend
     spec:
+      serviceAccountName: backend-sa
       containers:
       - name: backend
         image: kimsewon/sandbox-backend:latest
