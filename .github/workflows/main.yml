@@ -141,7 +141,7 @@ jobs:
       - frontend-build
       - sandbox-build
 
-    # # AWS IaC & Ansible 배포
+    # AWS IaC & Ansible 배포
     defaults:
       run:
         working-directory: infra
@@ -202,13 +202,12 @@ jobs:
 
           cat > k8s/ansible/inventory.ini <<EOF
           [master]
-          ${MASTER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/my-terraform-key.pem
+          ${MASTER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${HOME}/.ssh/my-terraform-key.pem
 
           [worker]
-          ${WORKER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/my-terraform-key.pem
+          ${WORKER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${HOME}/.ssh/my-terraform-key.pem
           EOF
 
       - name: Run Ansible playbook
         working-directory: k8s/ansible
         run: ansible-playbook -i inventory.ini site.yml
-

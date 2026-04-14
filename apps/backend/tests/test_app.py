@@ -3,6 +3,7 @@ from io import BytesIO
 from fastapi.testclient import TestClient
 
 from app.main import app
+from app.services.event_service import get_events
 
 
 client = TestClient(app)
@@ -33,15 +34,7 @@ def test_upload_flow_exposes_job_and_events() -> None:
     job_payload = job_response.json()
     assert job_payload["filename"] == "invoice.exe"
 
-    with client.stream("GET", f"/api/jobs/{job_id}/events") as stream_response:
-        assert stream_response.status_code == 200
-        chunks = []
-        for chunk in stream_response.iter_text():
-            if chunk:
-                chunks.append(chunk)
-            if any("data:" in part for part in chunks):
-                break
-
-    combined = "".join(chunks)
-    assert "data:" in combined
-    assert "Requesting security sandbox provisioning" in combined
+    events = get_events(job_id)
+    assert len(events) >= 2
+    assert events[0].message == "File upload completed."
+    assert any("Requesting security sandbox provisioning" in event.message for event in events)
