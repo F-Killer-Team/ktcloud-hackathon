@@ -25,7 +25,9 @@ spec:
         - name: APP_USE_IN_CLUSTER_CONFIG
           value: "true"
         - name: APP_K8S_NAMESPACE
-          value: "default" 
+          value: "default"
+        - name: APP_SANDBOX_IMAGE
+          value: "kimsewon/sandbox-image:latest" 
 ---
 apiVersion: v1
 kind: Service
