@@ -5,14 +5,14 @@
 
 ## Overview
 
-ZERO BOX는 기업 임직원이 의심 파일을 직접 실행하지 않고도, 웹에서 안전하게 분석을 요청할 수 있도록 설계된 랜섬웨어 대응 서비스입니다.  
-파일이 업로드되면 백엔드가 K3S 클러스터에 `1회용 Sandbox Job`을 생성하고, 분석이 끝나면 격리실을 즉시 폐기합니다.
+ZERO BOX는 기업 임직원이 의심 파일을 직접 실행하지 않고도, 웹에서 안전하게 분석할 수 있도록 설계된 랜섬웨어 대응 서비스입니다.
+파일이 업로드되면 백엔드가 K3S 클러스터에 1회용 Sandbox Job을 생성하고, 분석이 끝나면 격리실을 즉시 폐기합니다.
 
 - Target: `기업 임직원`
 - Domain: `사이버 보안`
 - Keywords: `On-Demand Sandbox`, `Disposable Isolation`, `Real-time Visibility`
 
-## Problem Statement
+## 문제 정의
 
 샌드박스는 의심스러운 파일을 실제 환경과 분리된 격리 공간에서 안전하게 실행 · 분석하는 보안 기술입니다.
 
@@ -25,9 +25,11 @@ ZERO BOX는 기업 임직원이 의심 파일을 직접 실행하지 않고도, 
 
 ZERO BOX는 이 문제를 `K3S 기반 1회용 샌드박스`로 해결합니다.
 
-## Differentiation
+## Comparison
 
-기존 샌드박스가 별도 분석 환경을 상시 운영하는 구조라면, ZERO BOX는 `필요한 순간에만 격리실을 생성하고 분석 후 즉시 폐기`하는 구조입니다.
+기존 상용 샌드박스 솔루션과 ZERO BOX의 구조적 차이를 비교합니다.
+
+기존 샌드박스는 분석 환경을 상시 운영하는 구조인 반면, ZERO BOX는 필요한 순간에만 격리실을 생성하고 분석 후 즉시 폐기합니다.
 
 | 비교 항목 | FortiSandbox | WildFire | ZERO BOX |
 |---|---|---|---|
@@ -41,25 +43,25 @@ ZERO BOX는 이 문제를 `K3S 기반 1회용 샌드박스`로 해결합니다.
 
 ![System Architecture](./demo_assets/architecture.png)
 
-### Layer 1. Client
+### Client Layer
 
 - 웹 브라우저
 - 파일 업로드 기반 접근
 - HTTPS · REST · SSE
 
-### Layer 2. Application
+### Application Layer
 
 - React Frontend
 - FastAPI Backend
 - Frontend Pod · Backend Pod · Sandbox Job/Pod
 
-### Layer 3. Infrastructure
+### Infrastructure Layer
 
 - Terraform · Ansible
 - AWS EC2 기반 K3S 클러스터
 - VPC · RBAC
 
-### Core Flow
+### Workflow
 
 1. 사용자가 프론트엔드에서 의심 파일 업로드
 2. 백엔드 API가 파일을 저장하고 Job 생성
@@ -70,7 +72,7 @@ ZERO BOX는 이 문제를 `K3S 기반 1회용 샌드박스`로 해결합니다.
 7. 프론트엔드가 결과를 실시간으로 표시
 8. 분석 완료 후 Sandbox Pod 즉시 종료 및 삭제
 
-## Infra-to-Deployment Pipeline
+## CI/CD Pipeline
 
 ZERO BOX는 인프라부터 배포까지 전 과정을 자동화했습니다.
 
@@ -81,7 +83,7 @@ ZERO BOX는 인프라부터 배포까지 전 과정을 자동화했습니다.
 
 Pipeline:
 
-`GitHub Actions -> 이미지 빌드 -> Docker Hub Push -> Terraform Apply -> Ansible 배포 -> K3S 서비스 실행`
+`GitHub Actions → Build Image → Push to Docker Hub → Terraform Apply → Ansible Provisioning → K3S Deployment`
 
 ## Demo
 
@@ -166,7 +168,9 @@ Pipeline:
 └─ demo_assets
 ```
 
-## What We Built
+## Key Features
+
+ZERO BOX에서 구현한 주요 기능은 다음과 같습니다.
 
 - 파일 업로드 API
 - 작업 상태 조회 API
@@ -177,7 +181,7 @@ Pipeline:
 
 자세한 내용은 [apps/backend/README.md](./apps/backend/README.md)와 [apps/backend/API_CONTRACT.md](./apps/backend/API_CONTRACT.md)를 참고하세요.
 
-## Expected Impact
+## 기대 효과
 
 - 의심 파일을 실제 업무 환경과 분리해 안전하게 분석
 - 1회용 격리실 구조로 분석 후 흔적 최소화
