@@ -12,7 +12,7 @@ ZERO BOX는 기업 임직원이 의심 파일을 직접 실행하지 않고도, 
 - Domain: `사이버 보안`
 - Keywords: `On-Demand Sandbox`, `Disposable Isolation`, `Real-time Visibility`
 
-## Problem
+## Problem Statement
 
 샌드박스는 의심스러운 파일을 실제 환경과 분리된 격리 공간에서 안전하게 실행 · 분석하는 보안 기술입니다.
 
